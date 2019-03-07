@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id="btn">发送数据</button>
+    <script src="jquery-1.12.4.min.js"></script>
+    <script>
+        let oBtn = document.querySelector('#btn');
+        oBtn.onclick = () => {
+            // 第一个请求
+            let p1 = new Promise((resolve, reject) => {
+                $.ajax({
+                    url: 'data/1.txt',
+                    type: 'get',
+                    dataType: 'json',
+                    success(res) {
+                        // 成功
+                        resolve(res);
+                    },
+                    error(e) {
+                        //失败
+                        reject(e);
+                    }
+                })
+            })
+            // 第二个请求
+            let p2 = new Promise((resolve, reject) => {
+                $.ajax({
+                    url: 'data/2.txt',
+                    type: 'get',
+                    dataType: 'json',
+                    success(res) {
+                        // 成功
+                        resolve(res);
+                    },
+                    error(e) {
+                        //失败
+                        reject(e);
+                    }
+                })
+            })
+
+            // Promise.all 同时执行多个请求
+            Promise.all([p1, p2])
+                .then((result) => {
+                    //都成功执行的代码
+                    console.log(result);
+                    let [arr1, arr2] = result;
+                    console.log(arr1, arr2);
+
+                }, (e) => {
+                    console.log('至少由一个失败');
+                })
+
+        }
+
+    </script>
+</body>
+
+</html>

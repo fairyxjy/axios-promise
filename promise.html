@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id="btn">发送数据</button>
+    <script src="jquery-1.12.4.min.js"></script>
+    <script>
+        let oBtn = document.querySelector('#btn');
+        // 传统ajax
+        // oBtn.onclick = () => {
+        //     $.ajax({
+        //         url: 'data/1.txt',
+        //         type: 'get',
+        //         dataType: 'json',
+        //         success(res) {
+        //             console.log(res);
+        //         },
+        //         error(e) {
+        //             console.log(e);
+        //         }
+        //     })
+        // }
+        // promise 实现 
+        //  resolve 成功   reject 失败
+        oBtn.onclick = () => {
+            let p1 = new Promise((resolve, reject) => {
+                $.ajax({
+                    url: 'data/1.txt',
+                    type: 'get',
+                    dataType: 'json',
+                    success(res) {
+                        // 成功
+                        resolve(res);
+                    },
+                    error(e) {
+                        //失败
+                        reject(e);
+                    }
+                })
+            })
+            p1.then((res) => {
+                // 成功代码
+                console.log(res);
+            }, (e) => {
+                // 失败代码
+                console.log(e);
+            })
+
+        }
+
+    </script>
+</body>
+
+</html>

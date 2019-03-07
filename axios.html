@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <button @click="run">发送数据</button>
+        {{res1}}
+    </div>
+    <script src="vue.js"></script>
+    <!-- 引入 axios 模块 -->
+    <script src="axios.min.js"></script>
+    <script>
+        // 添加全局的 axios 给 Vue, 用Vue中的axios操作
+        Vue.prototype.$axios = axios;
+        new Vue({
+            el: '#app',
+            data: {
+                res1: ''
+            },
+            methods: {
+                run() {
+                    // 用 axios 封装 ajax
+                    this.$axios.get('data/1.txt')
+                        .then((res) => {
+                            //成功代码
+                            //console.log(res);
+                            this.res1 = res.data;
+                        })
+                        .catch((e) => {
+                            // 失败代码
+                            console.log(e);
+                        })
+
+                }
+            }
+        })
+
+
+    </script>
+</body>
+
+</html>
